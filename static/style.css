@@ -1,0 +1,34 @@
+body {
+    padding: 20px;
+    background-color: rgb(119, 119, 119);
+}
+.success {
+    list-style: none;
+}
+.success li {
+    font-weight: bold;
+}
+.log-reg > section {
+    width: 45%;
+    display: inline-block;
+}
+section {
+    vertical-align: top;
+    margin: 0 25px;
+    background-color: #acabab;
+    border-radius: 10px;
+    padding: 20px;
+}
+header > * {
+    color: lime;
+}
+header > *, .branded-font {
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+.profile-pic {
+    width: 60px;
+    border-radius: 30px;
+}
+.active {
+    color: red;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Hello ORMs</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a id="logout" class="btn btn-primary float-right" href="/logout">Logout</a>
+            <h1>POSTerized</h1>
+        </header>
+        <hr>
+        <section>
+            <h2>Make a Post</h2>
+            <form action="/posts/create" method="post">
+                <input type="hidden" name="poster" value="{{ user.id }}">
+                <div class="form-group">
+                    <label for="content">Your Post:</label>
+                    <textarea class="form-control" name="content" placeholder="killer post goes here."></textarea>    
+                </div>
+                <input type="submit" value="POST IT" class="btn btn-primary">
+            </form>
+        </section>
+        <hr>
+        <h2>Posts</h2>
+        {% for post in posts %}
+            <section class="post">
+                <h4><a href="/posts/{{ post.id }}/show">{{ post.content }}</a></h4>
+                <h5><img src="{{ user.pic}}" alt="profile-pic"> Posted by {{ post.author.first_name }}</h5>
+                <h6>Likes: {{ post.num_likes }}</h6>
+            {% if post.author_id == user.id %}
+                <a href="/posts/delete/{{ post.id }}">Delete</a>
+            {% endif %}
+                <a href="/likes/{{ post.id }}">Like This!</a>
+            </section>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

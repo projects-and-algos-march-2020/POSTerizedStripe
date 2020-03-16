@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="https://js.stripe.com/v3/"></script>
+    <title>Hello ORMs</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a id="logout" class="btn btn-primary float-right" href="/logout">Logout</a>
+            <h1>POSTerized</h1>
+        </header>
+        <hr>
+        <section>
+            <h2>Please Confirm your Order</h2>
+            {% for item in order.order_items %}
+            <div class="order-item">
+                <p>{{ item.product.name }} ({{ item.product.string_price() }}) x {{ item.qty }}</p>
+            </div>
+            {% endfor %}
+            <h3>Total Amount: {{ order.total_price() }}</h3>
+            <a href="/orders/cancel" class="btn btn-danger">Cancel Order</a>
+
+            <form action="/orders/confirm" method="POST">
+                <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="{{ key }}"
+                    data-description="A Flask Charge"
+                    data-amount="{{ order.total_price() * 100 }}"
+                    data-locale="auto"></script>
+            </form>
+        </section>
+    </div>
+
+</body>
+</html>
